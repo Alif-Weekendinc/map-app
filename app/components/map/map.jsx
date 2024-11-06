@@ -202,61 +202,71 @@ function MapChildren({ position, setPosition }) {
     // }
     // init.current = true;
 
-    if (isShowPath) {
+    // if (isShowPath) {
       let newWaypoints = markers.map((mark) =>
         L.latLng(mark.geometry_coordinates[0], mark.geometry_coordinates[1])
       );
 
-      generatedRoutesRef.current = L.Routing.control({
-        waypoints: [...newWaypoints],
-        waypointNameFallback: function (latLng) {
-          function zeroPad(n) {
-            n = Math.round(n);
-            return n < 10 ? '0' + n : n;
-          }
-          function sexagesimal(p, pos, neg) {
-            let n = Math.abs(p),
-              degs = Math.floor(n),
-              mins = (n - degs) * 60,
-              secs = (mins - Math.floor(mins)) * 60,
-              frac = Math.round((secs - Math.floor(secs)) * 100);
-            return (
-              (n >= 0 ? pos : neg) +
-              degs +
-              '°' +
-              zeroPad(mins) +
-              "'" +
-              zeroPad(secs) +
-              '.' +
-              zeroPad(frac) +
-              '"'
-            );
-          }
+      if(isShowPath){
+        generatedRoutesRef.current = L.Routing.control({
+          waypoints: [...newWaypoints],
+          waypointNameFallback: function (latLng) {
+            function zeroPad(n) {
+              n = Math.round(n);
+              return n < 10 ? '0' + n : n;
+            }
+            function sexagesimal(p, pos, neg) {
+              let n = Math.abs(p),
+                degs = Math.floor(n),
+                mins = (n - degs) * 60,
+                secs = (mins - Math.floor(mins)) * 60,
+                frac = Math.round((secs - Math.floor(secs)) * 100);
+              return (
+                (n >= 0 ? pos : neg) +
+                degs +
+                '°' +
+                zeroPad(mins) +
+                "'" +
+                zeroPad(secs) +
+                '.' +
+                zeroPad(frac) +
+                '"'
+              );
+            }
 
-          return (
-            sexagesimal(latLng.lat, 'N', 'S') +
-            ' ' +
-            sexagesimal(latLng.lng, 'E', 'W')
-          );
-        },
-        lineOptions: {
-          styles: [{ color: '#6FA1EC', weight: 10 }],
-        },
-        altLineOptions: {
-          styles: [{ color: '#cecece', weight: 10 }],
-        },
-        show: true,
-        addWaypoints: false,
-        routeWhileDragging: false,
-        draggableWaypoints: false,
-        fitSelectedRoutes: true,
-        showAlternatives: true,
-        geocoder: L.Control.Geocoder.nominatim(),
-        createMarker: function () {
-          return null;
-        },
-      }).addTo(map);
-    }
+            return (
+              sexagesimal(latLng.lat, 'N', 'S') +
+              ' ' +
+              sexagesimal(latLng.lng, 'E', 'W')
+            );
+          },
+          lineOptions: {
+            styles: [{ color: '#6FA1EC', weight: 10 }],
+          },
+          altLineOptions: {
+            styles: [{ color: '#cecece', weight: 10 }],
+          },
+          show: true,
+          addWaypoints: true,
+          routeWhileDragging: true,
+          draggableWaypoints: true,
+          fitSelectedRoutes: true,
+          showAlternatives: true,
+          geocoder: L.Control.Geocoder.nominatim(),
+          reverseWaypoints:true
+          // createMarker: function () {
+          //   return new L.divIcon({
+          //     // iconUrl:'',
+          //     className: 'my-custom-pin',
+          //     iconAnchor: [0, 24],
+          //     labelAnchor: [-6, 0],
+          //     popupAnchor: [0, -36],
+          //     html: `<span style="${generateStyle(mark.color)}" />`,
+          //   })
+          // },
+        }).on('routesfound', (e) => {}).addTo(map);
+      }
+    // }
 
     return () => {
       if (generatedRoutesRef.current) {
@@ -391,16 +401,16 @@ function MapChildren({ position, setPosition }) {
           ]}
           draggable={mark.draggable}
           eventHandlers={eventHandlers}
-          icon={
-            new L.divIcon({
-              // iconUrl:'',
-              className: 'my-custom-pin',
-              iconAnchor: [0, 24],
-              labelAnchor: [-6, 0],
-              popupAnchor: [0, -36],
-              html: `<span style="${generateStyle(mark.color)}" />`,
-            })
-          }
+          // icon={
+          //   new L.divIcon({
+          //     // iconUrl:'',
+          //     className: 'my-custom-pin',
+          //     iconAnchor: [0, 24],
+          //     labelAnchor: [-6, 0],
+          //     popupAnchor: [0, -36],
+          //     html: `<span style="${generateStyle(mark.color)}" />`,
+          //   })
+          // }
         >
           <Popup>
             <div className='flex items-center justify-between'>
