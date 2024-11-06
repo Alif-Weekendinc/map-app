@@ -17,17 +17,51 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  /* color: rgb(var(--foreground-rgb)); */
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+/*
+
+.leaflet-container {
+  height: 100dvh;
+  width: 100dvw;
+} */
+
+.full-height-map{
+  width: 100dvw;
+  height: 100dvh;
+}
+
+.leaflet-routing-alt,
+.leaflet-routing-geocoders,
+.leaflet-routing-geocoder-result table td {
+  color: black !important;
+}
+
+.leaflet-routing-add-waypoint {
+  padding: 5px;
+}
+
+.leaflet-routing-geocoder input{
+  padding: 5px;
+}
+
+.leaflet-routing-remove-waypoint::after{
+  color: black !important;
+  top: 50% !important;
+  /* left: 50%; */
+  transform: translateY( 50%);
+  line-height: 15px !important;
+  margin-right: 5px !important;
 }
