@@ -820,7 +820,7 @@ function MapChildren({ position, setPosition, toCanvas }) {
   }
 
   const handleCopy = () => {
-    let text = 'localhost:3000' + pathname;
+    let text = 'https://map-app-tan.vercel.app'+pathname;
     let newArr = markers.map((mark) => objectToUrlParams(mark));
     text = text + '?routes=' + encodeURIComponent(newArr);
     // console.log(newArr,
