@@ -7,8 +7,6 @@ const SearchGeo = ({ handleCenter }) => {
   useEffect(() => {
     // if (!init.current) {
       let geocoder = L.Control.geocoder({
-        query: '',
-        placeholder: 'Search here...',
         defaultMarkGeocode: false,
       })
         .on('markgeocode', function (e) {
@@ -16,6 +14,8 @@ const SearchGeo = ({ handleCenter }) => {
           handleCenter(null, false, [e.geocode.center.lat, e.geocode.center.lng]);
         })
         .addTo(map);
+
+        geocoder.getContainer().style.display = 'none'
     // }
     // init.current = true;
   }, []);

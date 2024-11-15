@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "dom-to-image-more": "^3.5.0",
+    "html2canvas-pro": "^1.5.8",
     "leaflet": "^1.9.4",
     "leaflet-control-geocoder": "^2.4.0",
+    "leaflet-image": "^0.4.0",
     "leaflet-routing-machine": "^3.2.12",
     "next": "14.1.4",
     "react": "^18.3.1",
