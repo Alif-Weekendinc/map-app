@@ -95,12 +95,12 @@ const MapLeaf = () => {
         position={startingPoint}
         setPosition={setStartingPoint}
       />
-      {/* <div
+      <div
         className='absolute z-[999] right-0 bottom-0 w-[300px] h-[300px]'
         id='images'
       >
-        <a href={imageURL}>Download</a>
-      </div> */}
+        {/* <a href={imageURL}>Download</a> */}
+      </div>
       {/* <RoutingForm /> */}
     </MapContainer>
   );
