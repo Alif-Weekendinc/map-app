@@ -48,13 +48,25 @@ const MapLeaf = () => {
     leafletImage(mapContainerRef.current, function (err, canvas) {
       // now you have canvas
       // example thing to do with that canvas:
-      var img = document.createElement('img');
-      var dimensions = mapContainerRef.current.getSize();
-      img.width = dimensions.x;
-      img.height = dimensions.y;
-      img.src = canvas.toDataURL();
-      document.getElementById('images').innerHTML = '';
-      document.getElementById('images').appendChild(img);
+      // var img = document.createElement('img');
+      // var dimensions = mapContainerRef.current.getSize();
+      // img.width = dimensions.x;
+      // img.height = dimensions.y;
+      // img.src = canvas.toDataURL();
+      // document.getElementById('images').innerHTML = '';
+      // document.getElementById('images').appendChild(img);
+      // Get the data URL for the canvas content (in PNG format)
+      const dataURL = canvas.toDataURL('image/png');
+
+      // Create a temporary anchor element to trigger the download
+      const link = document.createElement('a');
+      link.href = dataURL;
+      link.download = 'export.png';
+
+      // Append the link to the body, trigger a click to start the download, and then remove the link
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     });
 
     // if (mapContainerRef.current) {
@@ -390,34 +402,43 @@ function MapChildren({ position, setPosition, toCanvas }) {
   };
 
   function urlParamsToObject(url) {
-    let newArr = []
-    let routesArr = []
+    let newArr = [];
+    let routesArr = [];
     url.map((urlSeg) => {
       const object = {};
       urlSeg.split('&').map((segment) => {
         let splittedSegment = segment.split('=');
-        console.log(splittedSegment[1].includes(';'),splittedSegment[1].split(';'), segment);
+        console.log(
+          splittedSegment[1].includes(';'),
+          splittedSegment[1].split(';'),
+          segment
+        );
         if (splittedSegment[1].includes(';')) {
           return (object[splittedSegment[0]] = splittedSegment[1].split(';'));
         } else {
           return (object[splittedSegment[0]] = splittedSegment[1]);
         }
       });
-      newArr.push(object)
-      routesArr.push(object.geometry_coordinates)
+      newArr.push(object);
+      routesArr.push(object.geometry_coordinates);
     });
 
     console.log(newArr, 'object', routesArr);
-    setMarkers(newArr)
-    setRoutes(routesArr)
+    setMarkers(newArr);
+    setRoutes(routesArr);
 
     // setTimeout(() => {
     //   console.log('hre')
-    if(newArr.length > 1)
-      setIsShowPath(true);
-    else{
-      console.log(newArr)
-      map.flyTo(L.latLng(newArr[0].geometry_coordinates[0], newArr[0].geometry_coordinates[1]), map.getZoom());
+    if (newArr.length > 1) setIsShowPath(true);
+    else {
+      console.log(newArr);
+      map.flyTo(
+        L.latLng(
+          newArr[0].geometry_coordinates[0],
+          newArr[0].geometry_coordinates[1]
+        ),
+        map.getZoom()
+      );
     }
     // }, 15000);
 
@@ -434,7 +455,7 @@ function MapChildren({ position, setPosition, toCanvas }) {
   }, [searchParams]);
 
   useEffect(() => {
-    console.log(markers, ',ar')
+    console.log(markers, ',ar');
     let newWaypoints = markers.map(
       (mark) =>
         new L.Routing.Waypoint(
@@ -820,7 +841,7 @@ function MapChildren({ position, setPosition, toCanvas }) {
   }
 
   const handleCopy = () => {
-    let text = 'https://map-app-tan.vercel.app'+pathname;
+    let text = 'https://map-app-tan.vercel.app' + pathname;
     let newArr = markers.map((mark) => objectToUrlParams(mark));
     text = text + '?routes=' + encodeURIComponent(newArr);
     // console.log(newArr,
@@ -829,7 +850,7 @@ function MapChildren({ position, setPosition, toCanvas }) {
     // )
     if (navigator.clipboard) {
       navigator.clipboard.writeText(text);
-      window.alert('copied')
+      window.alert('copied');
       // setIsSuccess(true)
       return; //codes below wont be executed
     }
@@ -844,7 +865,7 @@ function MapChildren({ position, setPosition, toCanvas }) {
     document.execCommand('copy');
 
     document.body.removeChild(textArea);
-    window.alert('copied')
+    window.alert('copied');
     // setIsSuccess(true);
   };
 
