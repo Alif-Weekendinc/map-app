@@ -983,7 +983,7 @@ function MapChildren({ position, setPosition, toCanvas }) {
             handleCenter(e, false);
           }}
         >
-          C
+          Center
         </div>
         {/* {markers.length > 1 && ( */}
         <div
@@ -996,7 +996,7 @@ function MapChildren({ position, setPosition, toCanvas }) {
             setTimeout(toCanvas, 1000);
           }}
         >
-          P
+          Print
         </div>
         <div
           className='py-[10px] px-[20px] bg-black rounded-[5px] text-white'
@@ -1008,7 +1008,7 @@ function MapChildren({ position, setPosition, toCanvas }) {
             setStartTrack(!startTrack);
           }}
         >
-          T
+          Track
         </div>
         <div
           className='py-[10px] px-[20px] bg-black rounded-[5px] text-white'
@@ -1020,7 +1020,7 @@ function MapChildren({ position, setPosition, toCanvas }) {
             handleCopy();
           }}
         >
-          S
+          Share
         </div>
         {/* )} */}
       </div>
